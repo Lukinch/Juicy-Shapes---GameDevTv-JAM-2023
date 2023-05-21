@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 064190049f5f61c488a1def48511e197, type: 3}
+  m_Name: Pattern_Parallel
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 0}
+  Title: 'SHOOTING PATTERN: PARALLEL'
+  Description: Changes the current shooting patter to shoot projectiles in a parallel
+    way
+  UpgradeType: 1
+  MovementUpgradeType: 0
+  FireUpgradeType: 0
+  HealthUpgradeType: 0
+  AddMoveSpeed: 1
+  AddAcceleration: 1
+  AddCurrentMaxHealthPoints: 10
+  AddShotsAmount: 2
+  AddShotsPerSecond: 1
+  AddDamage: 20
+  ShootingPattern: {fileID: 11400000, guid: 9ca475b6369175041abc95aa35b6ea83, type: 2}
