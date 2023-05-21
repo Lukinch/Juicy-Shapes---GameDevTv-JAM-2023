@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    [SerializeField] private GameObject _playerVisuals;
     [SerializeField] private InputReaderSO _inputReader;
     [SerializeField] private PlayerFiringStatsSO _playerFiringStats;
     [SerializeField] private PlayerMovementStatsSO _playerMovementStats;
@@ -12,8 +14,65 @@ public class PlayerStats : MonoBehaviour
 
     void OnEnable()
     {
-        EnemiesManager.OnWaveEnded += DisableControls;
-        ProgressionManager.OnUpgradeFinished += EnableControls;
+        PauseManager.OnGamePaused += PauseManager_OnGamePaused;
+        PlayerHealth.OnPlayerDied += PlayerHealth_OnPlayerDied;
+        EnemiesManager.OnWaveEnded += EnemiesManager_OnWaveEnded;
+        EnemiesManager.OnAllWavesCleared += EnemiesManager_OnAllWavesCleared;
+        GameStateManager.OnGameStarted += GameStateManager_OnGameStarted;
+        GameStateManager.OnPlayAgain += GameStateManager_OnPlayAgain;
+        GameStateManager.OnNextWaveCountdownFinished += GameStateManager_OnNextWaveCountdownFinished;
+    }
+
+    void OnDisable()
+    {
+        PauseManager.OnGamePaused -= PauseManager_OnGamePaused;
+        PlayerHealth.OnPlayerDied -= PlayerHealth_OnPlayerDied;
+        EnemiesManager.OnWaveEnded -= EnemiesManager_OnWaveEnded;
+        EnemiesManager.OnAllWavesCleared -= EnemiesManager_OnAllWavesCleared;
+        GameStateManager.OnGameStarted -= GameStateManager_OnGameStarted;
+        GameStateManager.OnPlayAgain -= GameStateManager_OnPlayAgain;
+        GameStateManager.OnNextWaveCountdownFinished -= GameStateManager_OnNextWaveCountdownFinished;
+    }
+
+    private void PauseManager_OnGamePaused(bool paused)
+    {
+        // if (paused) DisableControls();
+        // else EnableControls();
+    }
+
+    private void PlayerHealth_OnPlayerDied()
+    {
+        DisableControls();
+        _playerVisuals.SetActive(false);
+    }
+
+    private void EnemiesManager_OnAllWavesCleared()
+    {
+        DisableControls();
+    }
+
+    private void GameStateManager_OnGameStarted()
+    {
+        DisableControls();
+    }
+
+    private void EnemiesManager_OnWaveEnded(int arg1, int arg2)
+    {
+        DisableControls();
+    }
+
+    private void GameStateManager_OnPlayAgain()
+    {
+        DisableControls();
+        _playerMovement.ResetStats();
+        _playerFire.ResetStats();
+        _playerHealth.ResetStats();
+        _playerVisuals.SetActive(true);
+    }
+
+    private void GameStateManager_OnNextWaveCountdownFinished()
+    {
+        EnableControls();
     }
 
     private void EnableControls()
@@ -21,10 +80,12 @@ public class PlayerStats : MonoBehaviour
         _inputReader.EnableInputActions();
     }
 
-    private void DisableControls(int currentWave, int maxWaves)
+    private void DisableControls()
     {
         _inputReader.DisableInputActions();
     }
+
+    public GameObject PlayerVisuals => _playerVisuals;
 
     public ShootingPatternSO ShootingPattern
     {
