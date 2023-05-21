@@ -6,6 +6,10 @@ using System;
 
 public class PlayerHealth : MonoBehaviour
 {
+    [Header("Input")]
+    [SerializeField, Tooltip("Scriptable Object from which each input is read")]
+    private InputReaderSO _inputReader;
+
     [Header("Configuration")]
     [SerializeField, Expandable]
     private PlayerHealthStatsSO _playerHealthStats;
@@ -36,6 +40,7 @@ public class PlayerHealth : MonoBehaviour
     }
 
     public UnityEvent<float, float> OnPlayerHealthChanged;
+    public static event Action OnPlayerDied;
 
     private void Awake()
     {
@@ -44,8 +49,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnEnable()
     {
-        _maxHealthPoints = _playerHealthStats.MaxHealthPoints;
-        _currentHealth = _maxHealthPoints;
+        ResetStats();
     }
 
     private IEnumerator FlashOnHit()
@@ -67,7 +71,9 @@ public class PlayerHealth : MonoBehaviour
         if (_currentHealth <= 0f)
         {
             _currentHealth = 0f;
-            Destroy(gameObject);
+            OnPlayerDied?.Invoke();
+            _inputReader.DisableInputActions();
+            GetComponent<PlayerStats>().PlayerVisuals.SetActive(false);
             return;
         }
 
@@ -98,11 +104,10 @@ public class PlayerHealth : MonoBehaviour
         _hitVSFCoroutine = StartCoroutine(FlashOnHit());
     }
 
-    [Button]
-    public void ResetHealth()
+    public void ResetStats()
     {
-        _currentHealth = _playerHealthStats.MaxHealthPoints;
-
-        OnPlayerHealthChanged?.Invoke(_currentHealth, _playerHealthStats.MaxHealthPoints);
+        _maxHealthPoints = _playerHealthStats.MaxHealthPoints;
+        _currentHealth = _maxHealthPoints;
     }
 }
+

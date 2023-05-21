@@ -1,0 +1,125 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+using UnityEngine.Events;
+using UnityEditor;
+
+public class GameStateManager : MonoBehaviour
+{
+    [Header("Objective Screen Dependencies")]
+    [SerializeField] private GameObject _objectiveScreen;
+    [Header("Next Wave Screen Dependencies")]
+    [SerializeField] private GameObject _nextWaveScreen;
+    [SerializeField] private TextMeshProUGUI _countdownText;
+    [SerializeField] private int _timeTillNextWave = 3;
+    [Header("Win Screen Dependencies")]
+    [SerializeField] private GameObject _winScreen;
+    [Header("Game Over Screen Dependencies")]
+    [SerializeField] private GameObject _gameOverScreen;
+
+    private int _currentTime;
+
+    public static event Action OnGameStarted;
+    public static event Action OnNextWaveCountdownFinished;
+    public static event Action OnPlayAgain;
+
+    void Awake()
+    {
+        _objectiveScreen.SetActive(false);
+        _nextWaveScreen.SetActive(false);
+        _winScreen.SetActive(false);
+        _gameOverScreen.SetActive(false);
+    }
+
+    void OnEnable()
+    {
+        PlayerHealth.OnPlayerDied += ShowGameOverScreen;
+        ProgressionManager.OnUpgradeFinished += StartCountDownToNextWave;
+        EnemiesManager.OnAllWavesCleared += ShowWinScreen;
+    }
+
+    void OnDisable()
+    {
+        PlayerHealth.OnPlayerDied -= ShowGameOverScreen;
+        ProgressionManager.OnUpgradeFinished -= StartCountDownToNextWave;
+        EnemiesManager.OnAllWavesCleared -= ShowWinScreen;
+    }
+
+    void Start()
+    {
+        OnGameStarted?.Invoke();
+        _objectiveScreen.SetActive(true);
+    }
+
+    private void ShowGameOverScreen()
+    {
+        _gameOverScreen.SetActive(true);
+    }
+
+    private void ShowWinScreen()
+    {
+        _winScreen.SetActive(true);
+    }
+
+    private void StartCountDownToNextWave()
+    {
+        StartCoroutine(NextWaveCountdown());
+    }
+
+    private IEnumerator NextWaveCountdown()
+    {
+        _nextWaveScreen.SetActive(true);
+        _currentTime = _timeTillNextWave;
+        UpdateTimeText();
+
+        while (_currentTime > 0)
+        {
+            yield return new WaitForSeconds(1);
+            _currentTime--;
+            UpdateTimeText();
+        }
+
+        OnNextWaveCountdownFinished?.Invoke();
+
+        _nextWaveScreen.SetActive(false);
+    }
+
+    private void UpdateTimeText()
+    {
+        _countdownText.text = $"{_currentTime}";
+    }
+
+    // Meant to be called by buttons on Scene
+    public void AcceptControls()
+    {
+        _objectiveScreen.SetActive(false);
+        StartCountDownToNextWave();
+    }
+
+    // Meant to be called by buttons on Scene
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
+        Application.Quit();
+#endif
+    }
+
+    // Meant to be called by buttons on Scene
+    public void LoadMainMenu()
+    {
+        // Load Main Menu code here..
+    }
+
+    // Meant to be called by buttons on Scene
+    public void PlayAgain()
+    {
+        OnPlayAgain?.Invoke();
+        _winScreen.SetActive(false);
+        _gameOverScreen.SetActive(false);
+        StartCountDownToNextWave();
+    }
+}

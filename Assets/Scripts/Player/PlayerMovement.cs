@@ -1,3 +1,4 @@
+using System;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private Vector3 _playerOriginalPosition = new(0.0f, 0.4f, 0.0f);
     [Header("Dependencies")]
     [SerializeField, Tooltip("Scriptable Object from which each input is read")]
     private InputReaderSO _inputReaderSO;
@@ -43,15 +45,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        _moveSpeed = _playerMovementStats.MoveSpeed;
-        _speedChangeRate = _playerMovementStats.SpeedChangeRate;
-        _characterController.material = _physicMaterial;
+        ResetStats();
 
         _inputReaderSO.OnMoved += Input_OnMoved;
+        GameStateManager.OnPlayAgain += ResetPlayerPosition;
     }
+
     private void OnDisable()
     {
         _inputReaderSO.OnMoved -= Input_OnMoved;
+        GameStateManager.OnPlayAgain -= ResetPlayerPosition;
+    }
+
+    void Start()
+    {
+        _playerOriginalPosition = transform.position;
     }
 
     private void Update()
@@ -113,9 +121,24 @@ public class PlayerMovement : MonoBehaviour
         _inputDirection = new(_moveVector.x, 0.0f, _moveVector.y);
     }
 
+    private void ResetPlayerPosition()
+    {
+        _moveVector = Vector2.zero;
+        _inputDirection = Vector3.zero;
+        // ! THIS IS NOT WORKING!!!!!
+        gameObject.transform.position = _playerOriginalPosition;
+    }
+
     public void StopMoving()
     {
         _moveVector = Vector2.zero;
         _inputDirection = Vector3.zero;
+    }
+
+    public void ResetStats()
+    {
+        _moveSpeed = _playerMovementStats.MoveSpeed;
+        _speedChangeRate = _playerMovementStats.SpeedChangeRate;
+        _characterController.material = _physicMaterial;
     }
 }

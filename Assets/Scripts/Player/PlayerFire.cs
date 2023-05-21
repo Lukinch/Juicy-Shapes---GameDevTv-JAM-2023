@@ -58,9 +58,7 @@ public class PlayerFire : MonoBehaviour
 
     private void OnEnable()
     {
-        _shotsAmount = _playerFiringStats.ProjectileLines;
-        _shotsPerSecond = _playerFiringStats.ShotsPerSecond;
-        _damage = _playerFiringStats.Damage;
+        ResetStats();
 
         _inputReader.OnFired += Input_OnFired;
     }
@@ -93,5 +91,12 @@ public class PlayerFire : MonoBehaviour
         }
 
         _isOnCooldown = false;
+    }
+
+    public void ResetStats()
+    {
+        _shotsAmount = _playerFiringStats.ProjectileLines;
+        _shotsPerSecond = _playerFiringStats.ShotsPerSecond;
+        _damage = _playerFiringStats.Damage;
     }
 }

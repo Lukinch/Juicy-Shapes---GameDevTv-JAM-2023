@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -16,10 +17,12 @@ public class InputReaderSO : ScriptableObject, GameInputs.IPlayerActions
     private InputAction _move;
     private InputAction _look;
     private InputAction _fire;
+    private InputAction _pause;
 
     public event UnityAction<Vector2> OnMoved = delegate { };
     public event UnityAction<Vector2> OnLooked = delegate { };
     public event UnityAction<bool> OnFired = delegate { };
+    public event Action OnPaused;
 
     // Subscribe to events each time the object is loaded.
     private void OnEnable()
@@ -31,10 +34,12 @@ public class InputReaderSO : ScriptableObject, GameInputs.IPlayerActions
         _move = _gameInputs.Player.Move;
         _look = _gameInputs.Player.Look;
         _fire = _gameInputs.Player.Fire;
+        _pause = _gameInputs.Player.Pause;
 
         _move.performed += OnMove;
         _look.performed += OnLook;
         _fire.performed += OnFire;
+        _pause.performed += OnPause;
     }
 
     // Unsubscribes from events to prevent errors.
@@ -43,12 +48,23 @@ public class InputReaderSO : ScriptableObject, GameInputs.IPlayerActions
         _move.performed -= OnMove;
         _look.performed -= OnLook;
         _fire.performed -= OnFire;
+        _pause.performed -= OnPause;
 
         _gameInputs = null;
     }
 
-    public void EnableInputActions() => _gameInputs.Player.Enable();
-    public void DisableInputActions() => _gameInputs.Player.Disable();
+    public void EnableInputActions()
+    {
+        _move.performed += OnMove;
+        _look.performed += OnLook;
+        _fire.performed += OnFire;
+    }
+    public void DisableInputActions()
+    {
+        _move.performed -= OnMove;
+        _look.performed -= OnLook;
+        _fire.performed -= OnFire;
+    }
 
     // Event handling methods
 
@@ -92,5 +108,13 @@ public class InputReaderSO : ScriptableObject, GameInputs.IPlayerActions
         {
             OnFired?.Invoke(false);
         }
+    }
+
+    // Implements the interface from auto-generated GameInputs class.
+    // Invoke the OnFire event when action is performed.
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            OnPaused?.Invoke();
     }
 }

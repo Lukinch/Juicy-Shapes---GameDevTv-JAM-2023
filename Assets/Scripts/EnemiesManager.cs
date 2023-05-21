@@ -16,42 +16,51 @@ public class EnemiesManager : MonoBehaviour
 
     // _currentWave, _maxWave
     public static event Action<int, int> OnWaveEnded;
+    public static event Action OnAllWavesCleared;
 
     void OnEnable()
     {
         _player = FindFirstObjectByType<PlayerMovement>().transform;
         // Listens to any enemy died event
-        ProgressionManager.OnUpgradeFinished += ProgressionManager_OnUpgradeFinished;
         EnemyHealth.OnEnemyDied += OnEnemyDied;
+        GameStateManager.OnNextWaveCountdownFinished += SpawnNextWave;
+        GameStateManager.OnPlayAgain += GameStateManager_OnPlayAgain;
 
-        _maxWaves = _waves.Waves.Count;
-        _currentWave = 0;
-        SpawnWave();
-    }
-
-    private void ProgressionManager_OnUpgradeFinished()
-    {
-        SpawnWave();
+        GameStateManager_OnPlayAgain();
     }
 
     void OnDisable()
     {
         EnemyHealth.OnEnemyDied -= OnEnemyDied;
-        ProgressionManager.OnUpgradeFinished -= ProgressionManager_OnUpgradeFinished;
+        GameStateManager.OnNextWaveCountdownFinished -= SpawnNextWave;
+        GameStateManager.OnPlayAgain -= GameStateManager_OnPlayAgain;
+    }
+
+    private void GameStateManager_OnPlayAgain()
+    {
+        _poolingManager.ClearAllPools();
+        _maxWaves = _waves.Waves.Count;
+        _currentWave = 0;
+        _currentAmountOfEnemies = 0;
     }
 
     private void OnEnemyDied()
     {
         _currentAmountOfEnemies--;
         if (_currentAmountOfEnemies > 0) return;
-        if (_currentWave >= _maxWaves) return; // If out of waves, do something in the future, like "You win".
+        if (_currentWave >= _maxWaves)
+        {
+            OnAllWavesCleared?.Invoke();
+            return;
+        }
+
         _currentAmountOfEnemies = 0; // Safe check
-        // for now we will continue to spawn the next wave until we ran out of them
+
         OnWaveEnded?.Invoke(_currentWave, _maxWaves);
     }
 
     // [Button]
-    private void SpawnWave()
+    private void SpawnNextWave()
     {
         int spawnIndex;
         Wave currentWave = _waves.Waves[_currentWave];

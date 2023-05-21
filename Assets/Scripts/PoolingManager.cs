@@ -45,6 +45,9 @@ public class PoolingManager : ScriptableObject
             if (gameObject)
                 Destroy(gameObject);
         }
+
+        _poolablesPool.Clear();
+        _parents.Clear();
     }
 
     public void PoolProjectile(GameObject prefab, Vector3 position, Quaternion rotation, float projectileDamage)
@@ -132,5 +135,10 @@ public class PoolingManager : ScriptableObject
     public void ReturnObject(GameObject objectToReturn)
     {
         objectToReturn.SetActive(false);
+    }
+
+    public void ClearAllPools()
+    {
+        DestroyAllGameObjects();
     }
 }

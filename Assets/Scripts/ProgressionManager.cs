@@ -12,9 +12,11 @@ public class ProgressionManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _upgradeTitle;
     [SerializeField] private TextMeshProUGUI _upgradeDescription;
     [SerializeField] private TextMeshProUGUI _currentStatText;
+    [SerializeField] private TextMeshProUGUI _singlePatterWarning;
 
     [Header("Upgrades")]
     [SerializeField] private List<UpgradeSO> _upgrades;
+    [SerializeField] private UpgradeSO _pityPatterUpgrade;
 
     #region Cards Data
     [Header("Cards Button")]
@@ -28,6 +30,7 @@ public class ProgressionManager : MonoBehaviour
 
     private PlayerStats _playerStats;
     private UpgradeSO[] _drawnUpgrades;
+    private bool _applyExtraPattern = false;
 
     public static event Action OnUpgradeFinished;
 
@@ -55,7 +58,10 @@ public class ProgressionManager : MonoBehaviour
 
     private void OnUpgradeSelected(int upgradeIndex)
     {
-        _drawnUpgrades[upgradeIndex].ApplyUpgrade(_playerStats);
+        if (_applyExtraPattern)
+            _pityPatterUpgrade.ApplyUpgrade(_playerStats);
+        else
+            _drawnUpgrades[upgradeIndex].ApplyUpgrade(_playerStats);
         _upgradesPanel.SetActive(false);
         OnUpgradeFinished?.Invoke();
     }
@@ -185,6 +191,18 @@ public class ProgressionManager : MonoBehaviour
             UpgradeType.Health => $"Current: {_playerStats.CurrentMaxHealthPoints}",
             _ => $"Current: Undefined UpgradeType",
         };
+
+        _applyExtraPattern = false;
+        _singlePatterWarning.gameObject.SetActive(false);
+
+        if (upgradeSO.UpgradeType == UpgradeType.Fire &&
+            upgradeSO.FireUpgradeType == FireUpgradeType.ShotsAmount &&
+            _playerStats.ShotsAmount < 2 &&
+            _playerStats.ShootingPattern.PatternName == "Single")
+        {
+            _applyExtraPattern = true;
+            _singlePatterWarning.gameObject.SetActive(true);
+        }
     }
 
     public void OnCardHighlighted(int cardIndex)
