@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: 0}
   Title: MAX HEALTH UP
-  Description: Increases maximum health points by 20
+  Description: Increases maximum health points by 50
   UpgradeType: 2
   MovementUpgradeType: 0
   FireUpgradeType: 2
   HealthUpgradeType: 0
   AddMoveSpeed: 1
   AddAcceleration: 1
-  AddCurrentMaxHealthPoints: 20
+  AddCurrentMaxHealthPoints: 50
   AddShotsAmount: 2
   AddShotsPerSecond: 1
   AddDamage: 20

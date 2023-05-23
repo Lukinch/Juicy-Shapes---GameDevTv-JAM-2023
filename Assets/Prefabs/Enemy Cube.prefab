@@ -8,6 +8,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2389616886771760659, guid: a947577bf30c59048af75cbac5bf07ee,
+        type: 3}
+      propertyPath: m_Speed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2389616886771760659, guid: a947577bf30c59048af75cbac5bf07ee,
+        type: 3}
+      propertyPath: m_Acceleration
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4182144048682032215, guid: a947577bf30c59048af75cbac5bf07ee,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -21,7 +31,7 @@ PrefabInstance:
     - target: {fileID: 7241848051240063450, guid: a947577bf30c59048af75cbac5bf07ee,
         type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7241848051240063450, guid: a947577bf30c59048af75cbac5bf07ee,
         type: 3}
@@ -97,6 +107,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy Cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 8430624279988566471, guid: a947577bf30c59048af75cbac5bf07ee,
+        type: 3}
+      propertyPath: _damage
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
