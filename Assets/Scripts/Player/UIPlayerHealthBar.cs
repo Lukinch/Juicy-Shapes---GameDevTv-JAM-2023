@@ -14,22 +14,33 @@ public class UIPlayerHealthBar : MonoBehaviour
     private Coroutine _waitToUpdateGhostBarCoroutine;
     private Coroutine _updateHealthBarCoroutine;
 
+    private void Awake()
+    {
+        _waitForEndOfFrame = new();
+        ResetHealthValues();
+    }
+
     private void OnEnable()
     {
         PlayerHealth.OnPlayerHealthChanged += OnHealthChanged;
-        _currentHealth = _healthBar.fillAmount = _ghostHealthBar.fillAmount = 1;
+        PlayerHealth.OnResetHealth += ResetHealthValues;
     }
 
     private void OnDisable()
     {
         PlayerHealth.OnPlayerHealthChanged -= OnHealthChanged;
+        PlayerHealth.OnResetHealth -= ResetHealthValues;
+
         if (_waitToUpdateGhostBarCoroutine != null)
             StopCoroutine(_waitToUpdateGhostBarCoroutine);
         if (_updateHealthBarCoroutine != null)
             StopCoroutine(_updateHealthBarCoroutine);
     }
 
-    private void Awake() => _waitForEndOfFrame = new();
+    private void ResetHealthValues()
+    {
+        _currentHealth = _healthBar.fillAmount = _ghostHealthBar.fillAmount = 1;
+    }
 
     private void UpdateHealthVisuals()
     {
@@ -70,9 +81,8 @@ public class UIPlayerHealthBar : MonoBehaviour
 
     private void OnHealthChanged(float currentUnitHealth, float maxHealthPoints)
     {
-        if (currentUnitHealth == 0) return;
+        _currentHealth = currentUnitHealth == 0 ? 0f : currentUnitHealth / maxHealthPoints;
 
-        _currentHealth = currentUnitHealth / maxHealthPoints;
         UpdateHealthVisuals();
     }
 }

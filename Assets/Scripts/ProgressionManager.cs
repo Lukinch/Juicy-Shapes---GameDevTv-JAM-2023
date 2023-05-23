@@ -17,6 +17,8 @@ public class ProgressionManager : MonoBehaviour
     [Header("Upgrades")]
     [SerializeField] private List<UpgradeSO> _upgrades;
     [SerializeField] private UpgradeSO _pityPatterUpgrade;
+    [SerializeField] private Button _rerollButton;
+    [SerializeField] private int _rerollAmount = 1;
 
     #region Cards Data
     [Header("Cards Button")]
@@ -28,6 +30,7 @@ public class ProgressionManager : MonoBehaviour
     [SerializeField] private UpgradeData[] _upgradesData;
     #endregion
 
+    private int _currentRerollAmount;
     private PlayerStats _playerStats;
     private UpgradeSO[] _drawnUpgrades;
     private bool _applyExtraPattern = false;
@@ -42,6 +45,8 @@ public class ProgressionManager : MonoBehaviour
 
         EnemiesManager.OnWaveEnded += EnemiesManager_OnWaveEnded;
 
+        _rerollButton.onClick.AddListener(RerollCards);
+
         _leftCardButton.onClick.AddListener(() => OnUpgradeSelected(0));
         _middleCardButton.onClick.AddListener(() => OnUpgradeSelected(1));
         _rightCardButton.onClick.AddListener(() => OnUpgradeSelected(2));
@@ -51,9 +56,19 @@ public class ProgressionManager : MonoBehaviour
     {
         EnemiesManager.OnWaveEnded -= EnemiesManager_OnWaveEnded;
 
+        _rerollButton.onClick.RemoveAllListeners();
         _leftCardButton.onClick.RemoveAllListeners();
         _middleCardButton.onClick.RemoveAllListeners();
         _rightCardButton.onClick.RemoveAllListeners();
+    }
+
+    private void RerollCards()
+    {
+        _currentRerollAmount--;
+        if (_currentRerollAmount < 1)
+            _rerollButton.interactable = false;
+
+        DrawThreeUpgrades();
     }
 
     private void OnUpgradeSelected(int upgradeIndex)
@@ -71,8 +86,10 @@ public class ProgressionManager : MonoBehaviour
     /// </summary>
     private void EnemiesManager_OnWaveEnded(int currentWave, int maxWaves)
     {
-        if (currentWave == maxWaves) return; // TODO: you win screen is shown here.
+        if (currentWave == maxWaves) return;
 
+        _currentRerollAmount = _rerollAmount;
+        _rerollButton.interactable = true;
         _upgradesPanel.SetActive(true);
         DrawThreeUpgrades();
     }
@@ -217,7 +234,7 @@ public class ProgressionManager : MonoBehaviour
 public struct UpgradeData
 {
     public Image CardIcon;
-    public TextMeshProUGUI CardName;
+    public TextMeshProUGUI CardName; // ! TODO: remove this when we have the icons ready
     [HideInInspector] public string Title;
     [HideInInspector] public string Description;
 }

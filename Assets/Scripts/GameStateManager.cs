@@ -24,6 +24,7 @@ public class GameStateManager : MonoBehaviour
     public static event Action OnGameStarted;
     public static event Action OnNextWaveCountdownFinished;
     public static event Action OnPlayAgain;
+    public static event Action OnAnyEndScreenShown;
 
     void Awake()
     {
@@ -56,11 +57,13 @@ public class GameStateManager : MonoBehaviour
     private void ShowGameOverScreen()
     {
         _gameOverScreen.SetActive(true);
+        OnAnyEndScreenShown?.Invoke();
     }
 
     private void ShowWinScreen()
     {
         _winScreen.SetActive(true);
+        OnAnyEndScreenShown?.Invoke();
     }
 
     private void StartCountDownToNextWave()
