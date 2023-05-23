@@ -10,8 +10,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2389616886771760659, guid: a947577bf30c59048af75cbac5bf07ee,
         type: 3}
+      propertyPath: m_Speed
+      value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2389616886771760659, guid: a947577bf30c59048af75cbac5bf07ee,
+        type: 3}
       propertyPath: m_Radius
       value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 2389616886771760659, guid: a947577bf30c59048af75cbac5bf07ee,
+        type: 3}
+      propertyPath: m_Acceleration
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3961866780897028396, guid: a947577bf30c59048af75cbac5bf07ee,
         type: 3}
@@ -44,6 +54,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4649038237041873203, guid: a947577bf30c59048af75cbac5bf07ee,
+        type: 3}
+      propertyPath: _maxHealthPoints
+      value: 700
+      objectReference: {fileID: 0}
     - target: {fileID: 6320358364772680884, guid: a947577bf30c59048af75cbac5bf07ee,
         type: 3}
       propertyPath: m_Alpha
@@ -52,7 +67,7 @@ PrefabInstance:
     - target: {fileID: 7241848051240063450, guid: a947577bf30c59048af75cbac5bf07ee,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7241848051240063450, guid: a947577bf30c59048af75cbac5bf07ee,
         type: 3}
@@ -128,6 +143,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy 4 Star
+      objectReference: {fileID: 0}
+    - target: {fileID: 8430624279988566471, guid: a947577bf30c59048af75cbac5bf07ee,
+        type: 3}
+      propertyPath: _damage
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
