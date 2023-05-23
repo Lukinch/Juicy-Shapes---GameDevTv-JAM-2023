@@ -41,6 +41,9 @@ public class InputReaderSO : ScriptableObject, GameInputs.IPlayerActions
         _look = _gameInputs.Player.Look;
         _fire = _gameInputs.Player.Fire;
         _pause = _gameInputs.Player.Pause;
+        _colorRed = _gameInputs.Player.ColorRed;
+        _colorPink = _gameInputs.Player.ColorPink;
+        _colorLightBlue = _gameInputs.Player.ColorLightBlue;
 
         _move.performed += OnMove;
         _look.performed += OnLook;

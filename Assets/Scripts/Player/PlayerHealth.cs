@@ -40,6 +40,7 @@ public class PlayerHealth : MonoBehaviour
     }
 
     public static event Action<float, float> OnPlayerHealthChanged;
+    public static event Action OnResetHealth;
     public static event Action OnPlayerDied;
 
     private void Awake()
@@ -74,7 +75,6 @@ public class PlayerHealth : MonoBehaviour
             OnPlayerDied?.Invoke();
             _inputReader.DisableInputActions();
             GetComponent<PlayerStats>().PlayerVisuals.SetActive(false);
-            return;
         }
 
         OnPlayerHealthChanged?.Invoke(_currentHealth, _playerHealthStats.MaxHealthPoints);
@@ -108,6 +108,8 @@ public class PlayerHealth : MonoBehaviour
     {
         _maxHealthPoints = _playerHealthStats.MaxHealthPoints;
         _currentHealth = _maxHealthPoints;
+
+        OnResetHealth?.Invoke();
     }
 }
 
