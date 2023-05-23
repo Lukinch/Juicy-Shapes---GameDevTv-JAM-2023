@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1117345181918752296}
   - component: {fileID: 3502846310591796059}
   - component: {fileID: -4696598388746172448}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Bullet Projectile Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,6 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ead8d1fc595cd748a222dafc3b8f8b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 924434770482994750}
   _moveSpeed: 20
   _shouldMove: 1
   _destroyAfter: 1
@@ -124,7 +125,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4fe427eb94e2cb945b000f8d3fa411b4, type: 2}
+  - {fileID: 2100000, guid: 43afcbe0235c82449b04a2b545b5389e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -62,6 +62,33 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ColorRed"",
+                    ""type"": ""Button"",
+                    ""id"": ""863c41fa-bd0e-4c47-a574-d1d0dde30b27"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ColorPink"",
+                    ""type"": ""Button"",
+                    ""id"": ""43dd672c-88fc-4f09-b03f-23e6e3dccc17"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ColorLightBlue"",
+                    ""type"": ""Button"",
+                    ""id"": ""f5ebce06-974c-42b8-8103-df5b5d7c0b36"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -315,6 +342,39 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b9ed31d9-b12a-404a-bc13-f7b2fb3f5b25"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ColorRed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f30c4d0e-a3e7-4452-a208-6aea5e9092fc"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ColorPink"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c178f6dd-6dc6-4d2a-8b87-fc9cc846c082"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ColorLightBlue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -906,6 +966,9 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_ColorRed = m_Player.FindAction("ColorRed", throwIfNotFound: true);
+        m_Player_ColorPink = m_Player.FindAction("ColorPink", throwIfNotFound: true);
+        m_Player_ColorLightBlue = m_Player.FindAction("ColorLightBlue", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -983,6 +1046,9 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_ColorRed;
+    private readonly InputAction m_Player_ColorPink;
+    private readonly InputAction m_Player_ColorLightBlue;
     public struct PlayerActions
     {
         private @GameInputs m_Wrapper;
@@ -991,6 +1057,9 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @ColorRed => m_Wrapper.m_Player_ColorRed;
+        public InputAction @ColorPink => m_Wrapper.m_Player_ColorPink;
+        public InputAction @ColorLightBlue => m_Wrapper.m_Player_ColorLightBlue;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1012,6 +1081,15 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @ColorRed.started += instance.OnColorRed;
+            @ColorRed.performed += instance.OnColorRed;
+            @ColorRed.canceled += instance.OnColorRed;
+            @ColorPink.started += instance.OnColorPink;
+            @ColorPink.performed += instance.OnColorPink;
+            @ColorPink.canceled += instance.OnColorPink;
+            @ColorLightBlue.started += instance.OnColorLightBlue;
+            @ColorLightBlue.performed += instance.OnColorLightBlue;
+            @ColorLightBlue.canceled += instance.OnColorLightBlue;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1028,6 +1106,15 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @ColorRed.started -= instance.OnColorRed;
+            @ColorRed.performed -= instance.OnColorRed;
+            @ColorRed.canceled -= instance.OnColorRed;
+            @ColorPink.started -= instance.OnColorPink;
+            @ColorPink.performed -= instance.OnColorPink;
+            @ColorPink.canceled -= instance.OnColorPink;
+            @ColorLightBlue.started -= instance.OnColorLightBlue;
+            @ColorLightBlue.performed -= instance.OnColorLightBlue;
+            @ColorLightBlue.canceled -= instance.OnColorLightBlue;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1214,6 +1301,9 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnColorRed(InputAction.CallbackContext context);
+        void OnColorPink(InputAction.CallbackContext context);
+        void OnColorLightBlue(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

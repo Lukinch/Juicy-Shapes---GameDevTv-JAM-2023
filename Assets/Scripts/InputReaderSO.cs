@@ -18,11 +18,17 @@ public class InputReaderSO : ScriptableObject, GameInputs.IPlayerActions
     private InputAction _look;
     private InputAction _fire;
     private InputAction _pause;
+    private InputAction _colorRed;
+    private InputAction _colorPink;
+    private InputAction _colorLightBlue;
 
     public event UnityAction<Vector2> OnMoved = delegate { };
     public event UnityAction<Vector2> OnLooked = delegate { };
     public event UnityAction<bool> OnFired = delegate { };
     public event Action OnPaused;
+    public event Action OnColorRedPressed;
+    public event Action OnColorPinkPressed;
+    public event Action OnColorLightBluePressed;
 
     // Subscribe to events each time the object is loaded.
     private void OnEnable()
@@ -40,6 +46,9 @@ public class InputReaderSO : ScriptableObject, GameInputs.IPlayerActions
         _look.performed += OnLook;
         _fire.performed += OnFire;
         _pause.performed += OnPause;
+        _colorRed.performed += OnColorRed;
+        _colorPink.performed += OnColorPink;
+        _colorLightBlue.performed += OnColorLightBlue;
     }
 
     // Unsubscribes from events to prevent errors.
@@ -49,6 +58,9 @@ public class InputReaderSO : ScriptableObject, GameInputs.IPlayerActions
         _look.performed -= OnLook;
         _fire.performed -= OnFire;
         _pause.performed -= OnPause;
+        _colorRed.performed -= OnColorRed;
+        _colorPink.performed -= OnColorPink;
+        _colorLightBlue.performed -= OnColorLightBlue;
 
         _gameInputs = null;
     }
@@ -58,12 +70,18 @@ public class InputReaderSO : ScriptableObject, GameInputs.IPlayerActions
         _move.performed += OnMove;
         _look.performed += OnLook;
         _fire.performed += OnFire;
+        _colorRed.performed += OnColorRed;
+        _colorPink.performed += OnColorPink;
+        _colorLightBlue.performed += OnColorLightBlue;
     }
     public void DisableInputActions()
     {
         _move.performed -= OnMove;
         _look.performed -= OnLook;
         _fire.performed -= OnFire;
+        _colorRed.performed -= OnColorRed;
+        _colorPink.performed -= OnColorPink;
+        _colorLightBlue.performed -= OnColorLightBlue;
     }
 
     // Event handling methods
@@ -116,5 +134,23 @@ public class InputReaderSO : ScriptableObject, GameInputs.IPlayerActions
     {
         if (context.performed)
             OnPaused?.Invoke();
+    }
+
+    public void OnColorRed(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            OnColorRedPressed?.Invoke();
+    }
+
+    public void OnColorPink(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            OnColorPinkPressed?.Invoke();
+    }
+
+    public void OnColorLightBlue(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            OnColorLightBluePressed?.Invoke();
     }
 }

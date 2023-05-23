@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using NaughtyAttributes;
+using GlobalEnums;
+using System;
 
 /// <summary>
 /// Class in charge of reading 'Fire' input and calling the 'Pattern' SO to fire.
@@ -30,14 +32,11 @@ public class PlayerFire : MonoBehaviour
     /// <summary>Cached variable to save memory</summary>
     private WaitForSeconds _waitForSeconds;
 
-    // Remove "SerializeField" after debugging
-    [SerializeField] private int _shotsAmount;
-    // Remove "SerializeField" after debugging
-    [SerializeField] private int _shotsPerSecond;
-    // Remove "SerializeField" after debugging
-    [SerializeField] private float _damage;
-
-    public ShootingPatternSO ShootingPattern { get => _shootingPattern; set => _shootingPattern = value; }
+    private ShootingPatternSO _initialPattern;
+    private int _shotsAmount;
+    private int _shotsPerSecond;
+    private float _damage;
+    private ThemeColor _themeColor;
 
     // Stats
     public int ShotsAmount
@@ -55,15 +54,35 @@ public class PlayerFire : MonoBehaviour
         get => _damage;
         set => _damage = value;
     }
+    public ShootingPatternSO ShootingPattern
+    {
+        get => _shootingPattern;
+        set => _shootingPattern = value;
+    }
+
+    void Awake()
+    {
+        _initialPattern = _shootingPattern;
+        _themeColor = ThemeColor.Red;
+    }
 
     private void OnEnable()
     {
         ResetStats();
 
         _inputReader.OnFired += Input_OnFired;
+        _inputReader.OnColorRedPressed += Input_OnRedPressed;
+        _inputReader.OnColorPinkPressed += Input_OnPinkPressed;
+        _inputReader.OnColorLightBluePressed += Input_OnLightBluePressed;
     }
 
-    private void OnDisable() => _inputReader.OnFired -= Input_OnFired;
+    private void OnDisable()
+    {
+        _inputReader.OnFired -= Input_OnFired;
+        _inputReader.OnColorRedPressed -= Input_OnRedPressed;
+        _inputReader.OnColorPinkPressed -= Input_OnPinkPressed;
+        _inputReader.OnColorLightBluePressed -= Input_OnLightBluePressed;
+    }
 
     /// <summary>Only called once per input trigger</summary>
     private void Input_OnFired(bool isFiring)
@@ -71,6 +90,21 @@ public class PlayerFire : MonoBehaviour
         _isFiring = isFiring;
         if (!_isOnCooldown)
             StartCoroutine(InitiateShot());
+    }
+
+    private void Input_OnRedPressed()
+    {
+        _themeColor = ThemeColor.Red;
+    }
+
+    private void Input_OnPinkPressed()
+    {
+        _themeColor = ThemeColor.Pink;
+    }
+
+    private void Input_OnLightBluePressed()
+    {
+        _themeColor = ThemeColor.LightBlue;
     }
 
     /// <summary>
@@ -85,7 +119,7 @@ public class PlayerFire : MonoBehaviour
 
         while (_isFiring == true)
         {
-            ShootingPattern.Fire(_visuals, _projectile.ProjectilePrefab, _shotsAmount, _damage);
+            ShootingPattern.Fire(_visuals, _projectile.ProjectilePrefab, _shotsAmount, _damage, _themeColor);
 
             yield return _waitForSeconds;
         }
@@ -95,8 +129,10 @@ public class PlayerFire : MonoBehaviour
 
     public void ResetStats()
     {
+        _shootingPattern = _initialPattern;
         _shotsAmount = _playerFiringStats.ProjectileLines;
         _shotsPerSecond = _playerFiringStats.ShotsPerSecond;
         _damage = _playerFiringStats.Damage;
+        _themeColor = ThemeColor.Red;
     }
 }

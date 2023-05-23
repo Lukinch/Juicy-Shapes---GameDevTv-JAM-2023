@@ -1,10 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using GlobalEnums;
 
 public class Projectile : MonoBehaviour, IPoolable
 {
-    public PoolingManager PoolingManagerSO { get; set; }
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    public Material Material
+    {
+        get => _spriteRenderer.material;
+        set => _spriteRenderer.material = value;
+    }
 
+    public PoolingManager PoolingManagerSO { get; set; }
+    public ThemeColor ProjectileColor { get; set; }
     public float Damage { set; get; }
 }

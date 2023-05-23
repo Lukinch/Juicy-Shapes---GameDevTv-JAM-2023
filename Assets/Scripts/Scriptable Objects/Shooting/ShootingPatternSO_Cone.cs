@@ -1,4 +1,5 @@
 using System;
+using GlobalEnums;
 using UnityEngine;
 
 /// <summary>
@@ -17,7 +18,7 @@ public class ShootingPatternSO_Cone : ShootingPatternSO
     [Tooltip("The offset from the player center. Treat the minimum of 1 as the original position.")]
     private float _shotPositionOffset = 1.3f;
 
-    public override void Fire(Transform playerTransform, GameObject prefab, int shotsAmount, float damage)
+    public override void Fire(Transform playerTransform, GameObject prefab, int shotsAmount, float damage, ThemeColor themeColor)
     {
         // Projectile lines should always be odd, so at least 1 bullet is shot in the direction of the cursor
         if (shotsAmount % 2 == 0) shotsAmount -= 1;
@@ -39,7 +40,7 @@ public class ShootingPatternSO_Cone : ShootingPatternSO
             // Apply the local rotation in the local Y-axis direction of the firingPoint
             newRotation = playerTransform.transform.eulerAngles + localUp * currentLineRotation;
 
-            _poolingManagerSO.PoolProjectile(prefab, newPosition, Quaternion.Euler(newRotation), damage);
+            _poolingManagerSO.PoolProjectile(prefab, newPosition, Quaternion.Euler(newRotation), damage, themeColor);
 
             currentLineRotation += angleBetweenLines;
         }

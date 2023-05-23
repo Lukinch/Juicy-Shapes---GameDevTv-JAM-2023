@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1117345181918752296}
   - component: {fileID: 3502846310591796059}
   - component: {fileID: -4696598388746172448}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Bullet Projectile Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ead8d1fc595cd748a222dafc3b8f8b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 0}
   _moveSpeed: 20
   _shouldMove: 1
   _destroyAfter: 1

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerHitCollision : MonoBehaviour
+public class PlayerHitCollision : MonoBehaviour, IDamageable
 {
+    // Called in the editor
     public UnityEvent<float> OnDamageTaken;
 
-    private void OnTriggerEnter(Collider other)
+    public void DoDamage(float damageAmount)
     {
-        // damage for now will be 15
-        OnDamageTaken?.Invoke(15f);
+        OnDamageTaken?.Invoke(damageAmount);
     }
 }

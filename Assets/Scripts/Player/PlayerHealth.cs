@@ -39,7 +39,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public UnityEvent<float, float> OnPlayerHealthChanged;
+    public static event Action<float, float> OnPlayerHealthChanged;
     public static event Action OnPlayerDied;
 
     private void Awake()

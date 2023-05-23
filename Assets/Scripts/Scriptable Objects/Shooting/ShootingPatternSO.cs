@@ -1,3 +1,4 @@
+using GlobalEnums;
 using UnityEngine;
 
 /// <summary>
@@ -17,5 +18,5 @@ public abstract class ShootingPatternSO : ScriptableObject
     /// <paramref name="shotsAmount"/>: The amount of lines in which the projectiles will spawn (multiple bullets per shot).<br/>
     /// <paramref name="damage"/>: The damage that each projectile will make.<br/>
     /// </summary>
-    public abstract void Fire(Transform playerTransform, GameObject prefab, int shotsAmount, float damage);
+    public abstract void Fire(Transform playerTransform, GameObject prefab, int shotsAmount, float damage, ThemeColor color);
 }
