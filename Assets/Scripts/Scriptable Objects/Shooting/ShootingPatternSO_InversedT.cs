@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GlobalEnums;
 using UnityEngine;
 
 /// <summary>
@@ -19,7 +20,7 @@ public class ShootingPatternSO_InversesT : ShootingPatternSO
     private float _shotPositionOffset = 1.3f;
     [SerializeField] private float[] _rotationOffsets;
 
-    public override void Fire(Transform playerTransform, GameObject prefab, int shotsAmount, float damage)
+    public override void Fire(Transform playerTransform, GameObject prefab, int shotsAmount, float damage, ThemeColor themeColor)
     {
         //// Projectile lines should always be odd, so at least 1 bullet is shot in the direction of the cursor
         //// if (shotsAmount % 2 == 0) shotsAmount -= 1;
@@ -34,9 +35,7 @@ public class ShootingPatternSO_InversesT : ShootingPatternSO
 
         // Get the local right direction of the firingPoint
         Vector3 localRight = playerTransform.transform.right;
-        Debug.Log($"Local Right: {localRight}");
         Vector3 localForward = playerTransform.transform.forward;
-        Debug.Log($"Local Forward: {localForward}");
         Vector3 newPosition;
         Vector3 offsetPosition;
         Vector3 newRotation;
@@ -74,7 +73,7 @@ public class ShootingPatternSO_InversesT : ShootingPatternSO
                     offsetPosition = newPosition + (localForward * -currentLinePosition);
                 }
 
-                _poolingManagerSO.PoolProjectile(prefab, offsetPosition, Quaternion.Euler(newRotation), damage);
+                _poolingManagerSO.PoolProjectile(prefab, offsetPosition, Quaternion.Euler(newRotation), damage, themeColor);
 
                 currentLinePosition += _distanceBetweenLines;
             }

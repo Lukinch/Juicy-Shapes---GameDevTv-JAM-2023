@@ -14,31 +14,70 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Waves:
   - Enemies:
-    - EnemyPrefab: {fileID: 8835701955787713722, guid: 774836d355cfca84d8a0648681c5071e,
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: 89111b5922b77f5429d4570c77e29f75,
         type: 3}
-      AmountToSpawn: 5
+      AmountToSpawn: 8
   - Enemies:
-    - EnemyPrefab: {fileID: 8835701955787713722, guid: 774836d355cfca84d8a0648681c5071e,
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: 89111b5922b77f5429d4570c77e29f75,
+        type: 3}
+      AmountToSpawn: 14
+  - Enemies:
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: 89111b5922b77f5429d4570c77e29f75,
+        type: 3}
+      AmountToSpawn: 8
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: ebb5c6fe68eb38d4c98e74143ec20378,
+        type: 3}
+      AmountToSpawn: 4
+  - Enemies:
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: 89111b5922b77f5429d4570c77e29f75,
         type: 3}
       AmountToSpawn: 10
-  - Enemies:
-    - EnemyPrefab: {fileID: 8835701955787713722, guid: 774836d355cfca84d8a0648681c5071e,
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: ebb5c6fe68eb38d4c98e74143ec20378,
         type: 3}
       AmountToSpawn: 6
-    - EnemyPrefab: {fileID: 8835701955787713722, guid: 0990ecd8abcc3884aa6d97b4bd5b801c,
+  - Enemies:
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: 89111b5922b77f5429d4570c77e29f75,
+        type: 3}
+      AmountToSpawn: 12
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: ebb5c6fe68eb38d4c98e74143ec20378,
+        type: 3}
+      AmountToSpawn: 8
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: 671f1bc3cfac2f044ab3d97d2498eab7,
+        type: 3}
+      AmountToSpawn: 2
+  - Enemies:
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: 89111b5922b77f5429d4570c77e29f75,
+        type: 3}
+      AmountToSpawn: 16
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: ebb5c6fe68eb38d4c98e74143ec20378,
+        type: 3}
+      AmountToSpawn: 10
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: 671f1bc3cfac2f044ab3d97d2498eab7,
+        type: 3}
+      AmountToSpawn: 6
+  - Enemies:
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: 89111b5922b77f5429d4570c77e29f75,
+        type: 3}
+      AmountToSpawn: 20
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: ebb5c6fe68eb38d4c98e74143ec20378,
+        type: 3}
+      AmountToSpawn: 15
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: 671f1bc3cfac2f044ab3d97d2498eab7,
+        type: 3}
+      AmountToSpawn: 10
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: 89e3a10f73fdbb543b140a5e3d20495e,
         type: 3}
       AmountToSpawn: 3
   - Enemies:
-    - EnemyPrefab: {fileID: 8835701955787713722, guid: 774836d355cfca84d8a0648681c5071e,
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: 89111b5922b77f5429d4570c77e29f75,
+        type: 3}
+      AmountToSpawn: 25
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: ebb5c6fe68eb38d4c98e74143ec20378,
+        type: 3}
+      AmountToSpawn: 18
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: 671f1bc3cfac2f044ab3d97d2498eab7,
+        type: 3}
+      AmountToSpawn: 14
+    - EnemyPrefab: {fileID: 6754614110375941280, guid: 89e3a10f73fdbb543b140a5e3d20495e,
         type: 3}
       AmountToSpawn: 8
-    - EnemyPrefab: {fileID: 8835701955787713722, guid: 0990ecd8abcc3884aa6d97b4bd5b801c,
-        type: 3}
-      AmountToSpawn: 5
-  - Enemies:
-    - EnemyPrefab: {fileID: 8835701955787713722, guid: 774836d355cfca84d8a0648681c5071e,
-        type: 3}
-      AmountToSpawn: 10
-    - EnemyPrefab: {fileID: 8835701955787713722, guid: 0990ecd8abcc3884aa6d97b4bd5b801c,
-        type: 3}
-      AmountToSpawn: 7

@@ -25,6 +25,11 @@ public class Bullet : Projectile
     {
         if (!other.TryGetComponent(out IDamageable damageable))
             return;
+        if (!other.TryGetComponent(out EnemyCollision enemyCollision))
+            return;
+
+        if (enemyCollision.ColorManager.EnemyColor != ProjectileColor) return;
+
         if (_waitForReturnToPoolCoroutine != null)
         {
             StopCoroutine(_waitForReturnToPoolCoroutine);

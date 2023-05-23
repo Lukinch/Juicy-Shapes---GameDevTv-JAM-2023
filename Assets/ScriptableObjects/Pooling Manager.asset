@@ -12,3 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e210b5da68a8a694b88ce636f119e820, type: 3}
   m_Name: Pooling Manager
   m_EditorClassIdentifier: 
+  _projectileMaterialRed: {fileID: 2100000, guid: 43afcbe0235c82449b04a2b545b5389e,
+    type: 2}
+  _projectileMaterialPink: {fileID: 2100000, guid: 1fb260add0ff632469e3c336f128d65b,
+    type: 2}
+  _projectileMaterialLightBlue: {fileID: 2100000, guid: fa33b45015f3cab48aead9ac331d0c8c,
+    type: 2}
+  _enemyMaterialRed: {fileID: 2100000, guid: d733f291e01cbbb44840e9c123687566, type: 2}
+  _enemyMaterialPink: {fileID: 2100000, guid: 3d1ec9cd1905c48468b1d8f30cc2b08b, type: 2}
+  _enemyMaterialLightBlue: {fileID: 2100000, guid: cd35c57bdcc4cee48a2386e6a5377abd,
+    type: 2}
