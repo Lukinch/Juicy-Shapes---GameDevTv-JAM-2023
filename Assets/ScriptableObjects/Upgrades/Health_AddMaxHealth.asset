@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 064190049f5f61c488a1def48511e197, type: 3}
   m_Name: Health_AddMaxHealth
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 8b5ac15a9523ebb41a5bd21515c3a9ae, type: 3}
   Title: MAX HEALTH UP
   Description: Increases maximum health points by 50
   UpgradeType: 2

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 064190049f5f61c488a1def48511e197, type: 3}
   m_Name: Pattern_Cone
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: d1783160bf1517844b7edcbfd0fc6b6d, type: 3}
   Title: 'SHOOTING PATTERN: CONE'
   Description: Changes the current shooting patter to that of a cone
   UpgradeType: 1

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 064190049f5f61c488a1def48511e197, type: 3}
   m_Name: Fire_AddShootingSpeed
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 30a698c4dca220240b46d8ca13fcf427, type: 3}
   Title: SHOOTING SPEED UP
   Description: Increases the number of shots per second by 5
   UpgradeType: 1
