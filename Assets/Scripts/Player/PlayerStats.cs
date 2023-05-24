@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     [SerializeField] private GameObject _playerVisuals;
+    [SerializeField] private MeshRenderer _playerVisualsRenderer;
     [SerializeField] private InputReaderSO _inputReader;
     [SerializeField] private PlayerFiringStatsSO _playerFiringStats;
     [SerializeField] private PlayerMovementStatsSO _playerMovementStats;
@@ -68,6 +69,7 @@ public class PlayerStats : MonoBehaviour
         _playerFire.ResetStats();
         _playerHealth.ResetStats();
         _playerVisuals.SetActive(true);
+        _playerVisualsRenderer.enabled = true;
     }
 
     private void GameStateManager_OnNextWaveCountdownFinished()
@@ -86,6 +88,7 @@ public class PlayerStats : MonoBehaviour
     }
 
     public GameObject PlayerVisuals => _playerVisuals;
+    public MeshRenderer PlayerVisualsRenderer => _playerVisualsRenderer;
 
     public ShootingPatternSO ShootingPattern
     {
@@ -118,7 +121,14 @@ public class PlayerStats : MonoBehaviour
     public float CurrentMaxHealthPoints
     {
         get => _playerHealth.MaxHealthPoints;
-        set => _playerHealth.MaxHealthPoints = value;
+    }
+    public float CurrentHP
+    {
+        get => _playerHealth.MaxHealthPoints;
+    }
+    public void IncreaseMaxHPAndHeal(float percentageHeal, float addMaxHPAmount)
+    {
+        _playerHealth.IncreaseMaxHPAndHeal(percentageHeal, addMaxHPAmount);
     }
     public float MoveSpeed
     {

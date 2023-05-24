@@ -64,6 +64,7 @@ public class UpgradeSOEditor : Editor
                 if (healthUpgradeType == HealthUpgradeType.MaxHealthPoints)
                 {
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("AddCurrentMaxHealthPoints"));
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("CurrentHPPercentageHealAmount"));
                 }
                 break;
         }

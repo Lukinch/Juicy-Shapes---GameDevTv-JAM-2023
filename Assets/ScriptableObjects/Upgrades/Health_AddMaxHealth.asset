@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Health_AddMaxHealth
   m_EditorClassIdentifier: 
   Icon: {fileID: 21300000, guid: 8b5ac15a9523ebb41a5bd21515c3a9ae, type: 3}
-  Title: MAX HEALTH UP
-  Description: Increases maximum health points by 50
+  Title: MAX HEALTH UP AND HEAL
+  Description: Increases maximum health points by 50 and then heals 20% of the new
+    Max health
   UpgradeType: 2
   MovementUpgradeType: 0
   FireUpgradeType: 2
@@ -22,6 +23,7 @@ MonoBehaviour:
   AddMoveSpeed: 1
   AddAcceleration: 1
   AddCurrentMaxHealthPoints: 50
+  CurrentHPPercentageHealAmount: 0.2
   AddShotsAmount: 2
   AddShotsPerSecond: 1
   AddDamage: 20

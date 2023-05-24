@@ -1,9 +1,11 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIPlayerHealthBar : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI _healthText;
     [SerializeField] private Image _ghostHealthBar;
     [SerializeField] private Image _healthBar;
     [SerializeField] private float _barsEaseSpeed = 2f;
@@ -88,6 +90,8 @@ public class UIPlayerHealthBar : MonoBehaviour
     private void OnHealthChanged(float currentUnitHealth, float maxHealthPoints)
     {
         _currentHealth = currentUnitHealth == 0 ? 0f : currentUnitHealth / maxHealthPoints;
+
+        _healthText.text = $"{currentUnitHealth} / {maxHealthPoints}";
 
         UpdateHealthVisuals();
     }

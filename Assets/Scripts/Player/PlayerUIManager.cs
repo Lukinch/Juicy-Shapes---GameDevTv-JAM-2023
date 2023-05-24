@@ -6,21 +6,14 @@ public class PlayerUIManager : MonoBehaviour
 
     void OnEnable()
     {
-        EnemiesManager.OnWaveEnded += EnemiesManager_OnWaveEnded;
         GameStateManager.OnAnyEndScreenShown += GameStateManager_OnAnyEndScreenShown;
         GameStateManager.OnNextWaveCountdownFinished += GameStateManager_OnNextWaveCountdownFinished;
     }
 
     void OnDisable()
     {
-        EnemiesManager.OnWaveEnded -= EnemiesManager_OnWaveEnded;
         GameStateManager.OnAnyEndScreenShown -= GameStateManager_OnAnyEndScreenShown;
         GameStateManager.OnNextWaveCountdownFinished -= GameStateManager_OnNextWaveCountdownFinished;
-    }
-
-    private void EnemiesManager_OnWaveEnded(int arg1, int arg2)
-    {
-        HideUI();
     }
 
     private void GameStateManager_OnAnyEndScreenShown()
