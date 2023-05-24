@@ -32,9 +32,15 @@ public class UIPlayerHealthBar : MonoBehaviour
         PlayerHealth.OnResetHealth -= ResetHealthValues;
 
         if (_waitToUpdateGhostBarCoroutine != null)
+        {
             StopCoroutine(_waitToUpdateGhostBarCoroutine);
+            _ghostHealthBar.fillAmount = _currentHealth;
+        }
         if (_updateHealthBarCoroutine != null)
+        {
             StopCoroutine(_updateHealthBarCoroutine);
+            _healthBar.fillAmount = _currentHealth;
+        }
     }
 
     private void ResetHealthValues()

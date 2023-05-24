@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 064190049f5f61c488a1def48511e197, type: 3}
   m_Name: Movement_AddAcceleration
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 9411abd80f8ff51498fb1e83de8cc620, type: 3}
   Title: ACCELERATION UP
   Description: Increases move speed change rate by 5
   UpgradeType: 0
