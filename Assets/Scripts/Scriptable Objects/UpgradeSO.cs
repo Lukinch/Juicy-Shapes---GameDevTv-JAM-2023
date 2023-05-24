@@ -23,7 +23,9 @@ public class UpgradeSO : ScriptableObject
     [Range(1, 100)]
     public int AddAcceleration = 1;
     [Range(10, 100)]
-    public int AddCurrentMaxHealthPoints = 10;
+    public int AddCurrentMaxHealthPoints = 50;
+    [Range(0.1f, 1f)]
+    public float CurrentHPPercentageHealAmount = 0.2f;
     [Range(2, 10)]
     public int AddShotsAmount = 2;
     [Range(1, 10)]
@@ -69,7 +71,7 @@ public class UpgradeSO : ScriptableObject
     }
     private void ApplyHealthUpgrade(PlayerStats playerStats)
     {
-        playerStats.CurrentMaxHealthPoints += AddCurrentMaxHealthPoints;
+        playerStats.IncreaseMaxHPAndHeal(CurrentHPPercentageHealAmount, AddCurrentMaxHealthPoints);
     }
 
     public void ApplyUpgrade(PlayerStats playerStats)

@@ -43,6 +43,12 @@ public class PlayerMovement : MonoBehaviour
         set => _speedChangeRate = value;
     }
 
+    void Awake()
+    {
+        _moveVector = new();
+        _inputDirection = new();
+    }
+
     private void OnEnable()
     {
         ResetStats();
@@ -118,15 +124,15 @@ public class PlayerMovement : MonoBehaviour
     private void Input_OnMoved(Vector2 moveVector)
     {
         _moveVector = moveVector;
-        _inputDirection = new(_moveVector.x, 0.0f, _moveVector.y);
+        _inputDirection.x = _moveVector.x;
+        _inputDirection.z = _moveVector.y;
+        _inputDirection.y = transform.position.y;
     }
 
     private void ResetPlayerPosition()
     {
         _moveVector = Vector2.zero;
         _inputDirection = Vector3.zero;
-        // ! THIS IS NOT WORKING!!!!!
-        gameObject.transform.position = _playerOriginalPosition;
     }
 
     public void StopMoving()

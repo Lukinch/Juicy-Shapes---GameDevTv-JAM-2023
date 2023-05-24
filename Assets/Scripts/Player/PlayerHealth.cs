@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 using NaughtyAttributes;
 using System.Collections;
 using System;
@@ -15,18 +14,20 @@ public class PlayerHealth : MonoBehaviour
     private PlayerHealthStatsSO _playerHealthStats;
 
     [Space]
-    [SerializeField] private bool _shouldBeDamaged = true;
     [SerializeField] private Renderer _renderer;
     [SerializeField] private Color _normalColor;
     [SerializeField] private Color _hitColor;
-    [SerializeField, Range(0.01f, 1f)]
-    private float _hitFXDuration = 0.2f;
+    [SerializeField, Range(0.01f, 5)]
+    private float _cooldownBetweenHits = 2f;
+
 
     private float _currentHealth;
     private float _maxHealthPoints;
+    private bool _isHitOnCooldown;
 
-    private Coroutine _hitVSFCoroutine;
-    private WaitForSeconds _waitForFlashVFX;
+    private Coroutine _hitVFXCoroutine;
+    private Coroutine _hitCooldownCoroutine;
+    private WaitForSeconds _waitForCooldownHit;
 
     // Stats
     public float MaxHealthPoints
@@ -34,8 +35,7 @@ public class PlayerHealth : MonoBehaviour
         get => _maxHealthPoints;
         set
         {
-            _maxHealthPoints = value;
-            OnPlayerHealthChanged?.Invoke(_currentHealth, _maxHealthPoints);
+            IncreaseMaxHPAndHeal(0, value);
         }
     }
 
@@ -45,7 +45,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
-        _waitForFlashVFX = new(_hitFXDuration);
+        _waitForCooldownHit = new(_cooldownBetweenHits);
     }
 
     private void OnEnable()
@@ -53,63 +53,91 @@ public class PlayerHealth : MonoBehaviour
         ResetStats();
     }
 
-    private IEnumerator FlashOnHit()
+    private void HitVFX()
+    {
+        _hitVFXCoroutine = StartCoroutine(StartVFX());
+        _hitCooldownCoroutine = StartCoroutine(WaitForHitCooldown());
+    }
+
+    private IEnumerator StartVFX()
     {
         _renderer.material.color = _hitColor;
-        yield return _waitForFlashVFX;
+        yield return _waitForCooldownHit;
         _renderer.material.color = _normalColor;
+    }
+
+    private IEnumerator WaitForHitCooldown()
+    {
+        yield return _waitForCooldownHit;
+        _isHitOnCooldown = false;
+    }
+
+    private void StopCoroutines()
+    {
+        if (_hitVFXCoroutine != null)
+            StopCoroutine(_hitVFXCoroutine);
+        if (_hitCooldownCoroutine != null)
+            StopCoroutine(_hitCooldownCoroutine);
+        _renderer.material.color = _normalColor;
+    }
+
+    public void IncreaseMaxHPAndHeal(float percentageHeal, float addMaxHPAmount)
+    {
+        if (_currentHealth == _maxHealthPoints)
+        {
+            _maxHealthPoints += addMaxHPAmount;
+            _currentHealth = MaxHealthPoints;
+        }
+        else
+        {
+            _maxHealthPoints += addMaxHPAmount;
+
+            float healAmount = _maxHealthPoints * percentageHeal;
+
+            // HealVFX(); // TODO: implement later
+            _currentHealth += healAmount;
+
+            if (_currentHealth >= MaxHealthPoints)
+            {
+                _currentHealth = MaxHealthPoints;
+            }
+        }
+
+        OnPlayerHealthChanged?.Invoke(_currentHealth, _maxHealthPoints);
     }
 
     // Being called by an Unity Event
     public void DoDamage(float damageAmount)
     {
-        if (!_shouldBeDamaged) return;
+        if (_isHitOnCooldown) return;
         if (_currentHealth == 0f) return;
 
-        HitVFX();
+        _isHitOnCooldown = true;
+
         _currentHealth -= damageAmount;
 
         if (_currentHealth <= 0f)
         {
-            _currentHealth = 0f;
-            OnPlayerDied?.Invoke();
             _inputReader.DisableInputActions();
             GetComponent<PlayerStats>().PlayerVisuals.SetActive(false);
+            _currentHealth = 0f;
+            OnPlayerDied?.Invoke();
         }
 
-        OnPlayerHealthChanged?.Invoke(_currentHealth, _playerHealthStats.MaxHealthPoints);
-    }
-
-    // TODO: Should be called by an Unity Event in the future
-    public void DoHeal(float healAmount)
-    {
-        if (_currentHealth == MaxHealthPoints) return;
-
-        // HealVFX(); // TODO: implement later
-        _currentHealth += healAmount;
-
-        if (_currentHealth >= MaxHealthPoints)
+        if (_currentHealth > 0f)
         {
-            _currentHealth = MaxHealthPoints;
+            HitVFX();
         }
 
-        OnPlayerHealthChanged?.Invoke(_currentHealth, MaxHealthPoints);
-    }
-
-    private void HitVFX()
-    {
-        if (_hitVSFCoroutine != null)
-            StopCoroutine(_hitVSFCoroutine);
-
-        _hitVSFCoroutine = StartCoroutine(FlashOnHit());
+        OnPlayerHealthChanged?.Invoke(_currentHealth, _maxHealthPoints);
     }
 
     public void ResetStats()
     {
+        OnResetHealth?.Invoke();
         _maxHealthPoints = _playerHealthStats.MaxHealthPoints;
         _currentHealth = _maxHealthPoints;
-
-        OnResetHealth?.Invoke();
+        StopCoroutines();
     }
 }
 
