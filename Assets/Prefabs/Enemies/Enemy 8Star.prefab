@@ -69,6 +69,26 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -1422670401037391578, guid: 4b00ebe15508e0d45b71c6382a4759ad,
         type: 3}
+    - target: {fileID: 4182144048682032215, guid: a947577bf30c59048af75cbac5bf07ee,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182144048682032215, guid: a947577bf30c59048af75cbac5bf07ee,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182144048682032215, guid: a947577bf30c59048af75cbac5bf07ee,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182144048682032215, guid: a947577bf30c59048af75cbac5bf07ee,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4649038237041873203, guid: a947577bf30c59048af75cbac5bf07ee,
         type: 3}
       propertyPath: _maxHealthPoints
