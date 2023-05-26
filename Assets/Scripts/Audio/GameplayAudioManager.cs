@@ -7,13 +7,14 @@ using Random = UnityEngine.Random;
 public class GameplayAudioManager : MonoBehaviour
 {
     [Header("Audio Mix Group")]
+    [SerializeField] private AudioSource _playerHitAudioSource;
+
+    [Header("Audio Mix Group")]
     [SerializeField] private AudioMixerGroup _audioMixerGroup;
 
     [Header("Volume")]
     [SerializeField, Range(0f, 1f)] private float _playerFireVolume;
-
     [SerializeField, Range(0f, 1f)] private float _enemyDamageVolume;
-
     [SerializeField, Range(0f, 1f)] private float _enemyDeathVolume;
 
 
@@ -33,6 +34,7 @@ public class GameplayAudioManager : MonoBehaviour
     void OnEnable()
     {
         PlayerFire.OnPlayerFired += PlayerFire_OnPlayerFired;
+        PlayerHealth.OnPlayerDamaged += PlayerHealth_OnPlayerDamaged;
         EnemyHealth.OnEnemyDamaged += EnemyHealth_OnEnemyDamaged;
         EnemyHealth.OnEnemyDiedPosition += EnemyHealth_OnEnemyDiedPosition;
     }
@@ -40,8 +42,14 @@ public class GameplayAudioManager : MonoBehaviour
     void OnDisable()
     {
         PlayerFire.OnPlayerFired -= PlayerFire_OnPlayerFired;
+        PlayerHealth.OnPlayerDamaged -= PlayerHealth_OnPlayerDamaged;
         EnemyHealth.OnEnemyDamaged -= EnemyHealth_OnEnemyDamaged;
         EnemyHealth.OnEnemyDiedPosition -= EnemyHealth_OnEnemyDiedPosition;
+    }
+
+    private void PlayerHealth_OnPlayerDamaged()
+    {
+        _playerHitAudioSource.Play();
     }
 
     private void PlayerFire_OnPlayerFired(Vector3 position)
