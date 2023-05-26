@@ -42,6 +42,7 @@ public class PlayerHealth : MonoBehaviour
     public static event Action<float, float> OnPlayerHealthChanged;
     public static event Action OnResetHealth;
     public static event Action OnPlayerDied;
+    public static event Action OnPlayerDamaged;
 
     private void Awake()
     {
@@ -129,6 +130,7 @@ public class PlayerHealth : MonoBehaviour
             HitVFX();
         }
 
+        OnPlayerDamaged?.Invoke();
         OnPlayerHealthChanged?.Invoke(_currentHealth, _maxHealthPoints);
     }
 
