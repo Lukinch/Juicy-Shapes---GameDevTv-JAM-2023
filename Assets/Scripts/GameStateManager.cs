@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.Events;
 using UnityEditor;
 
 public class GameStateManager : MonoBehaviour
@@ -20,11 +18,13 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private GameObject _gameOverScreen;
 
     private int _currentTime;
+    private GameObject _currentShownScreen = null;
 
     public static event Action OnGameStarted;
     public static event Action OnNextWaveCountdownFinished;
     public static event Action OnPlayAgain;
     public static event Action OnAnyEndScreenShown;
+    public static event Action OnControlsAccepted;
 
     void Awake()
     {
@@ -37,6 +37,7 @@ public class GameStateManager : MonoBehaviour
     void OnEnable()
     {
         PlayerHealth.OnPlayerDied += ShowGameOverScreen;
+        PauseManager.OnGamePaused += PauseManager_OnGamePaused;
         ProgressionManager.OnUpgradeFinished += StartCountDownToNextWave;
         EnemiesManager.OnAllWavesCleared += ShowWinScreen;
     }
@@ -44,6 +45,7 @@ public class GameStateManager : MonoBehaviour
     void OnDisable()
     {
         PlayerHealth.OnPlayerDied -= ShowGameOverScreen;
+        PauseManager.OnGamePaused -= PauseManager_OnGamePaused;
         ProgressionManager.OnUpgradeFinished -= StartCountDownToNextWave;
         EnemiesManager.OnAllWavesCleared -= ShowWinScreen;
     }
@@ -54,15 +56,31 @@ public class GameStateManager : MonoBehaviour
         _objectiveScreen.SetActive(true);
     }
 
+    private void PauseManager_OnGamePaused(bool isPaused)
+    {
+        if (isPaused)
+        {
+            if (_currentShownScreen)
+                _currentShownScreen.SetActive(false);
+        }
+        else
+        {
+            if (_currentShownScreen)
+                _currentShownScreen.SetActive(true);
+        }
+    }
+
     private void ShowGameOverScreen()
     {
         _gameOverScreen.SetActive(true);
+        _currentShownScreen = _gameOverScreen;
         OnAnyEndScreenShown?.Invoke();
     }
 
     private void ShowWinScreen()
     {
         _winScreen.SetActive(true);
+        _currentShownScreen = _winScreen;
         OnAnyEndScreenShown?.Invoke();
     }
 
@@ -97,6 +115,7 @@ public class GameStateManager : MonoBehaviour
     // Meant to be called by buttons on Scene
     public void AcceptControls()
     {
+        OnControlsAccepted?.Invoke();
         _objectiveScreen.SetActive(false);
         StartCountDownToNextWave();
     }
@@ -123,6 +142,7 @@ public class GameStateManager : MonoBehaviour
         OnPlayAgain?.Invoke();
         _winScreen.SetActive(false);
         _gameOverScreen.SetActive(false);
+        _currentShownScreen = null;
         StartCountDownToNextWave();
     }
 }

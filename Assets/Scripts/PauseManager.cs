@@ -24,24 +24,29 @@ public class PauseManager : MonoBehaviour
 
     private void InputReader_OnPause()
     {
-        _isPaused = !_isPaused;
-        if (_isPaused)
-            Pause();
-        else
-            Resume();
+        TogglePause();
     }
 
-    public void Pause()
+    private void Pause()
     {
         OnGamePaused?.Invoke(true);
         _pauseScreen.SetActive(true);
         Time.timeScale = 0;
     }
 
-    public void Resume()
+    private void Resume()
     {
         OnGamePaused?.Invoke(false);
         _pauseScreen.SetActive(false);
         Time.timeScale = 1;
+    }
+
+    public void TogglePause()
+    {
+        _isPaused = !_isPaused;
+        if (_isPaused)
+            Pause();
+        else
+            Resume();
     }
 }

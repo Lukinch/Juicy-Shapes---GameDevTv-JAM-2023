@@ -17,6 +17,8 @@ public class EnemyHealth : MonoBehaviour
     public UnityEvent<float, float> OnHealthChanged;
     public UnityEvent OnDamageTaken;
     public static event Action OnEnemyDied;
+    public static event Action<Vector3> OnEnemyDiedPosition;
+    public static event Action<Vector3> OnEnemyDamaged;
 
     private void OnEnable()
     {
@@ -25,7 +27,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void DoDamage(float damageAmount)
     {
-        OnDamageTaken?.Invoke();
+        OnEnemyDamaged?.Invoke(transform.position);
         if (!_shouldBeDamaged) return;
         if (_currentHealth == 0f) return;
 
@@ -35,8 +37,11 @@ public class EnemyHealth : MonoBehaviour
             _currentHealth = 0f;
             _enemyPooling.ReturnToPool();
             OnEnemyDied?.Invoke();
+            OnEnemyDiedPosition?.Invoke(transform.position);
             return;
         }
+
+        OnDamageTaken?.Invoke();
 
         OnHealthChanged?.Invoke(_currentHealth, _maxHealthPoints);
     }
