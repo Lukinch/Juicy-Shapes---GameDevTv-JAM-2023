@@ -34,7 +34,9 @@ public class ProgressionManager : MonoBehaviour
     private PlayerStats _playerStats;
     private UpgradeSO[] _drawnUpgrades;
     private bool _applyExtraPattern = false;
+    private bool _isUpgradeScreenShown = false;
 
+    public static event Action OnUpgradeScreenShown;
     public static event Action OnUpgradeFinished;
 
     void OnEnable()
@@ -44,6 +46,7 @@ public class ProgressionManager : MonoBehaviour
         _playerStats = FindFirstObjectByType<PlayerStats>();
 
         EnemiesManager.OnWaveEnded += EnemiesManager_OnWaveEnded;
+        PauseManager.OnGamePaused += PauseManager_OnGamePaused;
 
         _rerollButton.onClick.AddListener(RerollCards);
 
@@ -55,11 +58,26 @@ public class ProgressionManager : MonoBehaviour
     void OnDisable()
     {
         EnemiesManager.OnWaveEnded -= EnemiesManager_OnWaveEnded;
+        PauseManager.OnGamePaused -= PauseManager_OnGamePaused;
 
         _rerollButton.onClick.RemoveAllListeners();
         _leftCardButton.onClick.RemoveAllListeners();
         _middleCardButton.onClick.RemoveAllListeners();
         _rightCardButton.onClick.RemoveAllListeners();
+    }
+
+    private void PauseManager_OnGamePaused(bool isPaused)
+    {
+        if (isPaused)
+        {
+            if (_isUpgradeScreenShown)
+                _upgradesPanel.SetActive(false);
+        }
+        else
+        {
+            if (_isUpgradeScreenShown)
+                _upgradesPanel.SetActive(true);
+        }
     }
 
     private void RerollCards()
@@ -78,6 +96,7 @@ public class ProgressionManager : MonoBehaviour
         else
             _drawnUpgrades[upgradeIndex].ApplyUpgrade(_playerStats);
         _upgradesPanel.SetActive(false);
+        _isUpgradeScreenShown = false;
         OnUpgradeFinished?.Invoke();
     }
 
@@ -91,6 +110,8 @@ public class ProgressionManager : MonoBehaviour
         _currentRerollAmount = _rerollAmount;
         _rerollButton.interactable = true;
         _upgradesPanel.SetActive(true);
+        _isUpgradeScreenShown = true;
+        OnUpgradeScreenShown?.Invoke();
         DrawThreeUpgrades();
     }
 

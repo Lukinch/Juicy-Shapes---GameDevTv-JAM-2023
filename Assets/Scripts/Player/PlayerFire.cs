@@ -60,6 +60,8 @@ public class PlayerFire : MonoBehaviour
         set => _shootingPattern = value;
     }
 
+    public static event Action<Vector3> OnPlayerFired;
+
     void Awake()
     {
         _initialPattern = _shootingPattern;
@@ -120,6 +122,7 @@ public class PlayerFire : MonoBehaviour
         while (_isFiring == true)
         {
             ShootingPattern.Fire(_visuals, _projectile.ProjectilePrefab, _shotsAmount, _damage, _themeColor);
+            OnPlayerFired?.Invoke(transform.position);
 
             yield return _waitForSeconds;
         }
