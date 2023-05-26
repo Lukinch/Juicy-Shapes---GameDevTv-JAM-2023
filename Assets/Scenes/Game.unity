@@ -7070,6 +7070,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1223486663}
   m_CullTransparentMesh: 1
+--- !u!64 &1233652419 stripped
+MeshCollider:
+  m_CorrespondingSourceObject: {fileID: 3444624982349081121, guid: af8b963bcafcc8b41a5fe303ef3b1638,
+    type: 3}
+  m_PrefabInstance: {fileID: 1729001464702556355}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1254815129
 GameObject:
   m_ObjectHideFlags: 0
@@ -14602,6 +14608,11 @@ PrefabInstance:
       propertyPath: _hitColor.r
       value: 0.6098327
       objectReference: {fileID: 0}
+    - target: {fileID: 7893746769229734780, guid: af8b963bcafcc8b41a5fe303ef3b1638,
+        type: 3}
+      propertyPath: _hitCollider
+      value: 
+      objectReference: {fileID: 1233652419}
     - target: {fileID: 7893746769229734780, guid: af8b963bcafcc8b41a5fe303ef3b1638,
         type: 3}
       propertyPath: _hitFXDuration

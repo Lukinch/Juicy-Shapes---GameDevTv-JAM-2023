@@ -9,6 +9,10 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField, Tooltip("Scriptable Object from which each input is read")]
     private InputReaderSO _inputReader;
 
+    [Header("Collision")]
+    [SerializeField]
+    private Collider _hitCollider;
+
     [Header("Configuration")]
     [SerializeField, Expandable]
     private PlayerHealthStatsSO _playerHealthStats;
@@ -23,7 +27,6 @@ public class PlayerHealth : MonoBehaviour
 
     private float _currentHealth;
     private float _maxHealthPoints;
-    private bool _isHitOnCooldown;
 
     private Coroutine _hitVFXCoroutine;
     private Coroutine _hitCooldownCoroutine;
@@ -70,7 +73,7 @@ public class PlayerHealth : MonoBehaviour
     private IEnumerator WaitForHitCooldown()
     {
         yield return _waitForCooldownHit;
-        _isHitOnCooldown = false;
+        _hitCollider.enabled = true;
     }
 
     private void StopCoroutines()
@@ -110,10 +113,9 @@ public class PlayerHealth : MonoBehaviour
     // Being called by an Unity Event
     public void DoDamage(float damageAmount)
     {
-        if (_isHitOnCooldown) return;
         if (_currentHealth == 0f) return;
 
-        _isHitOnCooldown = true;
+        _hitCollider.enabled = false;
 
         _currentHealth -= damageAmount;
 
@@ -139,6 +141,7 @@ public class PlayerHealth : MonoBehaviour
         OnResetHealth?.Invoke();
         _maxHealthPoints = _playerHealthStats.MaxHealthPoints;
         _currentHealth = _maxHealthPoints;
+        _hitCollider.enabled = true;
         StopCoroutines();
     }
 }
