@@ -14,6 +14,7 @@ public class PoolingManager : ScriptableObject
     [SerializeField] private Material _enemyMaterialRed;
     [SerializeField] private Material _enemyMaterialPink;
     [SerializeField] private Material _enemyMaterialLightBlue;
+
     // string: prefab name, List: poolable prefabs
     [NonSerialized] // <- Data will not be saved between play sessions
     private Dictionary<string, List<GameObject>> _poolablesPool;

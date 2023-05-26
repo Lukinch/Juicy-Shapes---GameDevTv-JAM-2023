@@ -1,18 +1,18 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using NaughtyAttributes;
-using System.Collections;
-using System;
 
-public class EnemyHealth : MonoBehaviour, IPoolable
+public class EnemyHealth : MonoBehaviour
 {
+    [Header("Dependencies")]
+    [SerializeField] private EnemyPooling _enemyPooling;
+
+    [Header("Customization")]
     [SerializeField, Range(1f, 1000f)] private int _maxHealthPoints = 100;
     [SerializeField] private bool _shouldBeDamaged = true;
-    [Space]
 
     private float _currentHealth;
-
-    public PoolingManager PoolingManagerSO { get; set; }
 
     public UnityEvent<float, float> OnHealthChanged;
     public UnityEvent OnDamageTaken;
@@ -25,25 +25,20 @@ public class EnemyHealth : MonoBehaviour, IPoolable
 
     public void DoDamage(float damageAmount)
     {
+        OnDamageTaken?.Invoke();
         if (!_shouldBeDamaged) return;
         if (_currentHealth == 0f) return;
 
-        OnDamageTaken?.Invoke();
         _currentHealth -= damageAmount;
         if (_currentHealth <= 0f)
         {
             _currentHealth = 0f;
-            ReturnToPool();
+            _enemyPooling.ReturnToPool();
             OnEnemyDied?.Invoke();
             return;
         }
 
         OnHealthChanged?.Invoke(_currentHealth, _maxHealthPoints);
-    }
-
-    private void ReturnToPool()
-    {
-        PoolingManagerSO.ReturnObject(gameObject);
     }
 
     [Button]

@@ -15,6 +15,7 @@ public class EnemyColorManager : MonoBehaviour
     private WaitForSeconds _waitForFlashVFX;
 
     public ThemeColor EnemyColor { get; set; }
+
     public Material Material
     {
         get => _meshRenderer.material;
