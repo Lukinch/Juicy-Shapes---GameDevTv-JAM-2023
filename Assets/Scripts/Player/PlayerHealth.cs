@@ -43,7 +43,7 @@ public class PlayerHealth : MonoBehaviour
     }
 
     public static event Action<float, float> OnPlayerHealthChanged;
-    public static event Action OnResetHealth;
+    public static event Action<float, float> OnResetHealth;
     public static event Action OnPlayerDied;
     public static event Action OnPlayerDamaged;
 
@@ -53,6 +53,11 @@ public class PlayerHealth : MonoBehaviour
     }
 
     private void OnEnable()
+    {
+        ResetStats();
+    }
+
+    void OnDisable()
     {
         ResetStats();
     }
@@ -124,6 +129,7 @@ public class PlayerHealth : MonoBehaviour
             _inputReader.DisableInputActions();
             GetComponent<PlayerStats>().PlayerVisuals.SetActive(false);
             _currentHealth = 0f;
+            ResetStats();
             OnPlayerDied?.Invoke();
         }
 
@@ -138,10 +144,10 @@ public class PlayerHealth : MonoBehaviour
 
     public void ResetStats()
     {
-        OnResetHealth?.Invoke();
         _maxHealthPoints = _playerHealthStats.MaxHealthPoints;
         _currentHealth = _maxHealthPoints;
         _hitCollider.enabled = true;
+        OnResetHealth?.Invoke(_currentHealth, _maxHealthPoints);
         StopCoroutines();
     }
 }

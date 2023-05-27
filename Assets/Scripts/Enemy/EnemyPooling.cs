@@ -11,7 +11,7 @@ public class EnemyPooling : MonoBehaviour, IPoolable
 
     public void ReturnToPool()
     {
-        SpawnVFX();
+        SpawnVFX(); // Disable this for WEBGL Builds, it's too much for it
         PoolingManagerSO.ReturnObject(gameObject);
     }
 

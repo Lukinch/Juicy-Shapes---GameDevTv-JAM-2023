@@ -95,6 +95,7 @@ public class MusicAudioManager : MonoBehaviour
 
     private void PlayRandomLevelTheme()
     {
+        _musicAudioSource.Stop();
         int index = Random.Range(0, _combatClips.Length);
         while (_currentClip == _combatClips[index])
         {

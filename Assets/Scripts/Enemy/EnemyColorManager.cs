@@ -13,8 +13,9 @@ public class EnemyColorManager : MonoBehaviour
 
     private Coroutine _hitVSFCoroutine;
     private WaitForSeconds _waitForFlashVFX;
+    [SerializeField] private ThemeColor _themeColor;
 
-    public ThemeColor EnemyColor { get; set; }
+    public ThemeColor EnemyColor { get => _themeColor; set => _themeColor = value; }
 
     public Material Material
     {
