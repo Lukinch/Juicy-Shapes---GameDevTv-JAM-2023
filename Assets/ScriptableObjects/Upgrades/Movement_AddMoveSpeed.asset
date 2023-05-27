@@ -14,14 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: 21300000, guid: 66d900a175a9d854f8425c35d0d64140, type: 3}
   Title: MOVE SPEED UP
-  Description: Increases movement speed by 1
+  Description: Increases movement speed by 2
   UpgradeType: 0
   MovementUpgradeType: 0
   FireUpgradeType: 2
   HealthUpgradeType: 0
-  AddMoveSpeed: 1
+  AddMoveSpeed: 2
   AddAcceleration: 1
   AddCurrentMaxHealthPoints: 10
+  CurrentHPPercentageHealAmount: 0.2
   AddShotsAmount: 2
   AddShotsPerSecond: 1
   AddDamage: 20

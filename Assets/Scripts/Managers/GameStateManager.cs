@@ -137,6 +137,7 @@ public class GameStateManager : MonoBehaviour
     public void LoadMainMenu()
     {
         SceneManager.LoadScene(0);
+        Time.timeScale = 1;
     }
 
     // Meant to be called by buttons on Scene

@@ -14,14 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: 21300000, guid: 9411abd80f8ff51498fb1e83de8cc620, type: 3}
   Title: ACCELERATION UP
-  Description: Increases move speed change rate by 5
+  Description: Increases move speed change rate by 10
   UpgradeType: 0
   MovementUpgradeType: 1
   FireUpgradeType: 2
   HealthUpgradeType: 0
   AddMoveSpeed: 1
-  AddAcceleration: 5
+  AddAcceleration: 10
   AddCurrentMaxHealthPoints: 10
+  CurrentHPPercentageHealAmount: 0.2
   AddShotsAmount: 2
   AddShotsPerSecond: 1
   AddDamage: 20

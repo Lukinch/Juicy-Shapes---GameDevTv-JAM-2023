@@ -16,6 +16,10 @@ public class AudioSettingsManager : MonoBehaviour
     public float UiVolume { get; set; }
     public float MusicVolume { get; set; }
 
+    // I didn't wanted to create another script that carries over scene or a scriptable object
+    // So I will leave it here
+    public bool PostProcessingEnabled { get; set; }
+
     public static AudioSettingsManager Instance;
 
     private void Awake()
@@ -29,6 +33,8 @@ public class AudioSettingsManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+
+        PostProcessingEnabled = true;
     }
 
     void Start()

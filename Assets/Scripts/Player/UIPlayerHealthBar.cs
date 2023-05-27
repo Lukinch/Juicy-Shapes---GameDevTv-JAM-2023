@@ -19,7 +19,7 @@ public class UIPlayerHealthBar : MonoBehaviour
     private void Awake()
     {
         _waitForEndOfFrame = new();
-        ResetHealthValues();
+        ResetHealthValues(100f, 100f);
     }
 
     private void OnEnable()
@@ -45,9 +45,10 @@ public class UIPlayerHealthBar : MonoBehaviour
         }
     }
 
-    private void ResetHealthValues()
+    private void ResetHealthValues(float currentUnitHealth, float maxHealthPoints)
     {
         _currentHealth = _healthBar.fillAmount = _ghostHealthBar.fillAmount = 1;
+        _healthText.text = $"{currentUnitHealth} / {maxHealthPoints}";
     }
 
     private void UpdateHealthVisuals()

@@ -7,9 +7,16 @@ public class MainMenuSplineObjectsManager : MonoBehaviour
     [SerializeField, Min(0f)] private float _timeBetweenObjectActivation = 0.1f;
     [SerializeField] private SplineAnimate[] _splineAnimate;
 
-    void Start()
+    private Coroutine _beginAnimations;
+
+    void OnEnable()
     {
-        StartCoroutine(StartObjectsAwakening());
+        _beginAnimations = StartCoroutine(StartObjectsAwakening());
+    }
+
+    void OnDisable()
+    {
+        StopCoroutine(_beginAnimations);
     }
 
     private IEnumerator StartObjectsAwakening()
