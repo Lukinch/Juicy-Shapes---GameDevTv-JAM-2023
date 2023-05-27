@@ -7,6 +7,7 @@ public class PauseManager : MonoBehaviour
 {
     [SerializeField] private InputReaderSO _inputReader;
     [SerializeField] private GameObject _pauseScreen;
+    [SerializeField] private GameObject _optionsSCreen;
 
     private bool _isPaused = false;
 
@@ -37,6 +38,7 @@ public class PauseManager : MonoBehaviour
     private void Resume()
     {
         OnGamePaused?.Invoke(false);
+        _optionsSCreen.SetActive(false);
         _pauseScreen.SetActive(false);
         Time.timeScale = 1;
     }
@@ -48,5 +50,17 @@ public class PauseManager : MonoBehaviour
             Pause();
         else
             Resume();
+    }
+
+    public void ShowOptions()
+    {
+        _pauseScreen.SetActive(false);
+        _optionsSCreen.SetActive(true);
+    }
+
+    public void HideOptions()
+    {
+        _optionsSCreen.SetActive(false);
+        _pauseScreen.SetActive(true);
     }
 }
