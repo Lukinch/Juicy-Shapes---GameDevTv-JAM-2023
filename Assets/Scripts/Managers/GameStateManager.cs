@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -54,6 +55,7 @@ public class GameStateManager : MonoBehaviour
     {
         OnGameStarted?.Invoke();
         _objectiveScreen.SetActive(true);
+        _currentShownScreen = _objectiveScreen;
     }
 
     private void PauseManager_OnGamePaused(bool isPaused)
@@ -117,6 +119,7 @@ public class GameStateManager : MonoBehaviour
     {
         OnControlsAccepted?.Invoke();
         _objectiveScreen.SetActive(false);
+        _currentShownScreen = null;
         StartCountDownToNextWave();
     }
 
@@ -133,7 +136,7 @@ public class GameStateManager : MonoBehaviour
     // Meant to be called by buttons on Scene
     public void LoadMainMenu()
     {
-        // Load Main Menu code here..
+        SceneManager.LoadScene(0);
     }
 
     // Meant to be called by buttons on Scene
